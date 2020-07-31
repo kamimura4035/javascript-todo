@@ -10,11 +10,13 @@ input.addEventListener("keyup", event => {
   if (event.key === "Enter") {
     const message = event.target.value;
     // modelを追加
+    // r追記
     const todo = new TodoModel(message);
     todoListModel.add(todo);
     todoListRender(todoListModel);
 
     // xボタンのイベント設置
+    // 変更
     event.target.value = "";
   }
 });
