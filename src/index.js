@@ -11,6 +11,7 @@ input.addEventListener("keyup", event => {
     const message = event.target.value;
     // modelを追加
     // r追記
+    //
     const todo = new TodoModel(message);
     todoListModel.add(todo);
     todoListRender(todoListModel);
