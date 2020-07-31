@@ -6,6 +6,9 @@ export class TodoListModel {
   add(todo) {
     this.todos.push(todo);
   }
+  remove(id) {
+    this.todos = this.todos.filter(todo => todo.id !== Number(id));
+  }
 }
 
 export class TodoModel {
