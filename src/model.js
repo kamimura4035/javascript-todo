@@ -16,14 +16,15 @@ export class TodoListModel extends EventEmitter {
     this.todos.push(todo);
     this.emit("change");
   }
-  remove(id) {
+  remove({ id }) {
+    console.log(id);
     this.todos = this.todos.filter(todo => todo.id !== Number(id));
     this.emit("change");
   }
-  toggleChecked(id) {
+  update({ id, checked }) {
     this.todos = this.todos.map(todo => {
       if (todo.id === Number(id)) {
-        todo.checked = !todo.checked;
+        todo.checked = checked;
       }
       return todo;
     });

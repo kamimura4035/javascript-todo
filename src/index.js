@@ -1,8 +1,8 @@
-import { element } from "./render";
 import { TodoListModel, TodoModel } from "./model";
+import { TodoListView } from "./view";
 
 const input = document.getElementById("input");
-const todoListView = document.getElementById("todoList");
+const todoListContainer = document.getElementById("todoList");
 const todoListCountView = document.getElementById("count");
 const todoListCheckedCountView = document.getElementById("checkedCount");
 const todoListModel = new TodoListModel();
@@ -28,32 +28,17 @@ todoListModel.onChange(() => {
   // viewが増えても、ここで管理すればOK。すばらしい
 });
 
+// callback関数を配下のcomponentにわたしているなあ
 const todoListRender = todoListModel => {
-  const ul = element`<ul></ul>`;
-  todoListModel.todos.forEach(todo => {
-    const checked = todo.checked ? "checked" : "";
-    const className = todo.checked ? "checked" : "";
-    const li = element`
-    <li id="${
-      todo.id
-    }" class="${className}"><input type="checkbox" ${checked}>${
-      todo.name
-    } <span>x</span></li>      
-    `;
-    // x削除ボタンにイベントを紐つける
-    const span = li.getElementsByTagName("span")[0];
-    span.addEventListener("click", event => {
-      todoListModel.remove(todo.id);
-    });
-
-    // checkboxにイベントをひもつける
-    const checkBox = li.getElementsByTagName("input")[0];
-    checkBox.addEventListener("change", event => {
-      todoListModel.toggleChecked(todo.id);
-    });
-
-    ul.appendChild(li);
+  const todoListView = new TodoListView();
+  const todoListElement = todoListView.createElement(todoListModel.todos, {
+    onUpdateTodo: ({ id, checked }) => {
+      todoListModel.update({ id, checked });
+    },
+    onDeleteTodo: ({ id }) => {
+      todoListModel.remove({ id });
+    }
   });
-  todoListView.innerHTML = "";
-  todoListView.appendChild(ul);
+  todoListContainer.innerHTML = "";
+  todoListContainer.appendChild(todoListElement);
 };
