@@ -17,7 +17,6 @@ export class TodoListModel extends EventEmitter {
     this.emit("change");
   }
   remove({ id }) {
-    console.log(id);
     this.todos = this.todos.filter(todo => todo.id !== Number(id));
     this.emit("change");
   }

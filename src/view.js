@@ -15,7 +15,6 @@ class TodoView {
     // x削除ボタンにイベントを紐つける
     const span = li.getElementsByTagName("span")[0];
     span.addEventListener("click", () => {
-      console.log(todo.id);
       onDeleteTodo({
         id: todo.id
       });
