@@ -15,6 +15,7 @@ input.addEventListener("keyup", event => {
     todoListModel.add(todo);
     todoListRender(todoListModel);
     todoListCountView.innerText = todoListModel.todos.length;
+
     event.target.value = "";
   }
 });
@@ -22,8 +23,12 @@ input.addEventListener("keyup", event => {
 const todoListRender = todoListModel => {
   const ul = element`<ul></ul>`;
   todoListModel.todos.forEach(todo => {
+    const checked = todo.checked ? "checked" : "";
+    const className = todo.checked ? "checked" : "";
     const li = element`
-    <li id="${todo.id}"><input type="checkbox">${
+    <li id="${
+      todo.id
+    }" class="${className}"><input type="checkbox" ${checked}>${
       todo.name
     } <span>x</span></li>      
     `;
@@ -41,8 +46,8 @@ const todoListRender = todoListModel => {
     });
 
     // checkboxにイベントをひもつける
-    const input = li.getElementsByTagName("input")[0];
-    input.addEventListener("change", event => {
+    const checkBox = li.getElementsByTagName("input")[0];
+    checkBox.addEventListener("change", event => {
       const todoId = event.target.parentNode.id;
       const checked = event.target.checked;
       todoListModel.toggleChecked(todoId, checked);
