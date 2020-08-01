@@ -20,10 +20,10 @@ export class TodoListModel extends EventEmitter {
     this.todos = this.todos.filter(todo => todo.id !== Number(id));
     this.emit("change");
   }
-  toggleChecked(id, checked) {
+  toggleChecked(id) {
     this.todos = this.todos.map(todo => {
       if (todo.id === Number(id)) {
-        todo.checked = checked;
+        todo.checked = !todo.checked;
       }
       return todo;
     });

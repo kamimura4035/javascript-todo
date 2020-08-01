@@ -25,7 +25,7 @@ todoListModel.onChange(() => {
   todoListCountView.innerText = todoListModel.todos.length;
   // checkCountの変更
   todoListCheckedCountView.innerText = todoListModel.getCheckedTodosCount();
-  // viewが増えても、ここで管理すればOK
+  // viewが増えても、ここで管理すればOK。すばらしい
 });
 
 const todoListRender = todoListModel => {
@@ -49,7 +49,7 @@ const todoListRender = todoListModel => {
     // checkboxにイベントをひもつける
     const checkBox = li.getElementsByTagName("input")[0];
     checkBox.addEventListener("change", event => {
-      todoListModel.toggleChecked(todo.id, checked);
+      todoListModel.toggleChecked(todo.id);
     });
 
     ul.appendChild(li);
