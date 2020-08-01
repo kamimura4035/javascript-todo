@@ -13,9 +13,19 @@ input.addEventListener("keyup", event => {
     // modelを追加
     const todo = new TodoModel(message);
     todoListModel.add(todo);
-    todoListRender(todoListModel);
     event.target.value = "";
   }
+});
+
+// modelに変化があったときの処理をまとめる
+todoListModel.onChange(() => {
+  // 全体の描画
+  todoListRender(todoListModel);
+  // countの変更
+  todoListCountView.innerText = todoListModel.todos.length;
+  // checkCountの変更
+  todoListCheckedCountView.innerText = todoListModel.getCheckedTodosCount();
+  // viewが増えても、ここで管理すればOK
 });
 
 const todoListRender = todoListModel => {
@@ -30,13 +40,11 @@ const todoListRender = todoListModel => {
       todo.name
     } <span>x</span></li>      
     `;
-
     // x削除ボタンにイベントを紐つける
     const span = li.getElementsByTagName("span")[0];
     span.addEventListener("click", event => {
       const todoId = event.target.parentNode.id;
       todoListModel.remove(todoId);
-      todoListRemoveRender(todoId);
     });
 
     // checkboxにイベントをひもつける
@@ -45,34 +53,9 @@ const todoListRender = todoListModel => {
       const todoId = event.target.parentNode.id;
       const checked = event.target.checked;
       todoListModel.toggleChecked(todoId, checked);
-      todoListCheckedRender(todoId, checked);
     });
     ul.appendChild(li);
   });
   todoListView.innerHTML = "";
   todoListView.appendChild(ul);
-};
-
-// modelに変化があったときの処理をまとめる
-todoListModel.onChange(() => {
-  // countの変更
-  todoListCountView.innerText = todoListModel.todos.length;
-  // checkCountの変更
-  todoListCheckedCountView.innerText = todoListModel.getCheckedTodosCount();
-});
-
-// 消す
-const todoListRemoveRender = todoId => {
-  const todo = document.getElementById(todoId);
-  todo.remove();
-};
-
-// checkする
-const todoListCheckedRender = (todoId, checked) => {
-  const todo = document.getElementById(todoId);
-  if (checked) {
-    todo.className = "checked";
-  } else {
-    todo.className = "";
-  }
 };
