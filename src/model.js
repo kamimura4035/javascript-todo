@@ -11,11 +11,14 @@ export class TodoListModel {
   }
   toggleChecked(id, checked) {
     this.todos = this.todos.map(todo => {
-      if (todo.id === id) {
+      if (todo.id === Number(id)) {
         todo.checked = checked;
       }
       return todo;
     });
+  }
+  getCheckedTodosCount() {
+    return this.todos.filter(todo => todo.checked === true).length;
   }
 }
 
