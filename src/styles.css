@@ -4,3 +4,8 @@ body {
 .delete-button {
   padding: 10px;
 }
+
+.checked {
+  font-style: italic;
+  color: #ccc;
+}
