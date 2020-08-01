@@ -43,17 +43,15 @@ const todoListRender = todoListModel => {
     // x削除ボタンにイベントを紐つける
     const span = li.getElementsByTagName("span")[0];
     span.addEventListener("click", event => {
-      const todoId = event.target.parentNode.id;
-      todoListModel.remove(todoId);
+      todoListModel.remove(todo.id);
     });
 
     // checkboxにイベントをひもつける
     const checkBox = li.getElementsByTagName("input")[0];
     checkBox.addEventListener("change", event => {
-      const todoId = event.target.parentNode.id;
-      const checked = event.target.checked;
-      todoListModel.toggleChecked(todoId, checked);
+      todoListModel.toggleChecked(todo.id, checked);
     });
+
     ul.appendChild(li);
   });
   todoListView.innerHTML = "";
