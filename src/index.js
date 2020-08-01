@@ -14,8 +14,6 @@ input.addEventListener("keyup", event => {
     const todo = new TodoModel(message);
     todoListModel.add(todo);
     todoListRender(todoListModel);
-    todoListCountView.innerText = todoListModel.todos.length;
-
     event.target.value = "";
   }
 });
@@ -39,10 +37,6 @@ const todoListRender = todoListModel => {
       const todoId = event.target.parentNode.id;
       todoListModel.remove(todoId);
       todoListRemoveRender(todoId);
-
-      // 数を表示しているUIを表示する
-      todoListCountView.innerText = todoListModel.todos.length;
-      todoListCheckedCountView.innerText = todoListModel.getCheckedTodosCount();
     });
 
     // checkboxにイベントをひもつける
@@ -52,14 +46,20 @@ const todoListRender = todoListModel => {
       const checked = event.target.checked;
       todoListModel.toggleChecked(todoId, checked);
       todoListCheckedRender(todoId, checked);
-      todoListCheckedCountView.innerText = todoListModel.getCheckedTodosCount();
     });
-
     ul.appendChild(li);
   });
   todoListView.innerHTML = "";
   todoListView.appendChild(ul);
 };
+
+// modelに変化があったときの処理をまとめる
+todoListModel.onChange(() => {
+  // countの変更
+  todoListCountView.innerText = todoListModel.todos.length;
+  // checkCountの変更
+  todoListCheckedCountView.innerText = todoListModel.getCheckedTodosCount();
+});
 
 // 消す
 const todoListRemoveRender = todoId => {
